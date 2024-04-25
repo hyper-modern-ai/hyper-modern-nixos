@@ -1,7 +1,7 @@
-{ ... }:
-{
+{ ... }: {
   primary-user.home-manager.services.dunst = {
     enable = true;
+
     settings = {
       global = {
         font = "Monospace 6";
@@ -16,7 +16,9 @@
         frame_width = 1;
         separator_color = "frame";
         markup = "full";
-        format = "<b>%s</b>\n%b";
+        format = ''
+          <b>%s</b>
+          %b'';
         alignment = "left";
         show_age_threshold = 60;
         word_wrap = "yes";

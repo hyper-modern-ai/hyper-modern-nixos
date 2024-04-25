@@ -1,6 +1,4 @@
-{ config, ... }:
-
-{
+{ config, ... }: {
   config.primary-user.home-manager.programs.starship = {
     enable = true;
     enableBashIntegration = true;

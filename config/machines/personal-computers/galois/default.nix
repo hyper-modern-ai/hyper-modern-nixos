@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   imports = [
     ./hardware.nix
     ./kmonad.nix
@@ -19,11 +17,9 @@
     experimental-features = nix-command flakes
   '';
 
-  environment.systemPackages = [
-    pkgs.acpi
-  ];
+  environment.systemPackages = [ pkgs.acpi ];
 
-  primary-user.name = "solomon";
+  primary-user.name = "b7r6";
 
   sops.secrets.syncoid-ssh-key = {
     owner = "syncoid";

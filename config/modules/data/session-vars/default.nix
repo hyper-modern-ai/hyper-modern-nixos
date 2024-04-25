@@ -1,18 +1,16 @@
 { config, ... }:
 
-let
-  homeDir = config.primary-user.home-manager.home.homeDirectory;
-in
-{
+let homeDir = config.primary-user.home-manager.home.homeDirectory;
+
+in {
   primary-user.home-manager.home = rec {
-    sessionPath = [
-      "${homeDir}/.cabal/bin"
-      "${sessionVariables.XDG_BIN_HOME}"
-    ];
+
+    sessionPath =
+      [ "${homeDir}/.cabal/bin" "${sessionVariables.XDG_BIN_HOME}" ];
 
     sessionVariables = {
-      VISUAL = "vim";
-      EDITOR = "vim";
+      VISUAL = "nvim";
+      EDITOR = "nvim";
 
       XDG_CACHE_HOME = "${homeDir}/.cache";
       XDG_CONFIG_HOME = "${homeDir}/.config";

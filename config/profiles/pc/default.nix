@@ -1,6 +1,4 @@
-{ config, pkgs, inputs, ... }:
-
-{
+{ config, pkgs, inputs, ... }: {
   imports = [
     ../physical-machine
 
@@ -13,14 +11,15 @@
     ../../modules/ui/audio
     ../../modules/ui/direnv
     ../../modules/ui/dunst
-    # ../../modules/ui/eww
     ../../modules/ui/fonts
     ../../modules/ui/opengl
     ../../modules/ui/picom
     ../../modules/ui/kitty
     ../../modules/ui/st
-    # ../../modules/ui/termonad
     ../../modules/ui/xserver
+
+    # ../../modules/ui/termonad
+    # ../../modules/ui/eww
 
     # TODO: Write Modules:
     # ../../modules/ui/emacs
@@ -28,85 +27,93 @@
     # ../../modules/ui/zathura # Home Manager
   ];
 
-  #nixpkgs.overlays = [ (import ../../../overlays/graphqurl.nix) ];
+  # TODO(xz): figure out what's going on here...
+  # nixpkgs.overlays = [ (import ../../../overlays/graphqurl.nix) ];
 
   environment.systemPackages = with pkgs; [
-    # CLI Tools
-    fd
-    ispell
-    udiskie
-    sqlite # for org-roam, should I move to postgres? How would I sync between machines in that case?
-    xclip
+    # cli basics
+    btop
+    duf
+    dust
+    eza
+    fzf
+    mcfly
+    ripgrep
+    starship
+    zoxide
+
+    # terminal emulators
+    alacritty
     kitty
+    urxvt
+    wezterm
+    xterm
 
-    filezilla
+    # editors
+    emacs29
+    vscode
+    neovim
 
-    # Editors
-    emacs
-    vscodium
-
-    # Desktop Environment
+    # desktop environment
     brightnessctl
     eww
     libnotify
-    xlayoutdisplay
     wmctrl
+    xclip
+    xlayoutdisplay
 
-    # DB
-    postgresql_14
-
-    # Media
+    # media
     pavucontrol
     picard
     vlc
     scrot
     zathura
 
-    # Secrets
+    # secret management
     yubioath-flutter
 
-    # Chat/Communication
+    # chat
     discord
     signal-desktop
     slack
     telegram-desktop
     zoom-us
 
-    # Pandoc Related
-    pandoc
-    texlive.combined.scheme-full
-    #pythonPackages.pygments
-    poppler_utils
-
-    # Web Browsers
+    # browsers
+    brave
     firefox
     google-chrome
     surf
 
-    # Misc Graphical Tools
+    # miscellaneous...
+    ispell
+    udiskie
+    sqlite
     zotero
+    filezilla
   ];
-
 
   primary-user.home-manager.programs.rofi = {
     enable = true;
-    #location = "top";
+
+    # TODO(xz): figure out what's going on here...
+    # location = "top";
+
     plugins = [
-      #  pkgs.rofi-mpd
       pkgs.rofi-calc
       pkgs.rofi-emoji
+
+      # TODO(xz): figure out what's going on here...
+      #  pkgs.rofi-mpd
       #  pkgs.rofi-systemd
       #  pkgs.rofi-power-menu
     ];
 
-    terminal = "${pkgs.kitty}/bin/kitty";
-
+    terminal = "${pkgs.wezterm}/bin/wezterm";
   };
 
   virtualisation = {
-    containers = {
-      enable = true;
-    };
+    containers = { enable = true; };
 
     docker = {
       enable = true;

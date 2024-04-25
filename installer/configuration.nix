@@ -1,7 +1,4 @@
-# Default system config for fresh machines.
-{ config, pkgs, lib, ... }:
-
-{
+{ config, pkgs, lib, ... }: {
   imports = [ ./hardware-configuration.nix ];
 
   boot.loader.systemd-boot.enable = true;
@@ -24,37 +21,39 @@
 
   users = {
     mutableUsers = false;
-    users.solomon = {
+    users.b7r6 = {
       isNormalUser = true;
       extraGroups = [ "wheel" "networkmanager" "keys" ];
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHedhPWMgsGFQS7niiFlgkCty/0yS68tVP0pm4x4PQLp solomon@nightshade"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILVTeNwDsHZX06k+o+fz1wmI8h3q2ks+5C7Mv5ADXo+o solomon@lorean"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKK3kMxgeA9ivLG/A81PNKhRJx32r7dzFnl+SZNhBc9K solomon@sower"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMngowB0i16wwKP0j+L207+dr512n+rbfYsh/MAPD+PS solomon@apollyon"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBjp4zAsIR3EsYW1yIRQpaaXSXgaWwMji22rnstPd4cH b7r6@pm.me"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAeh8RZ1WSdbDOEDN1UtdBI6sdxxnRkqPbh8c0aQt38g theshe1k@ltcm.exchange"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINMh3ATmMA+XXUKySUXM0HKtVsbrb9kZMOX6k7hkRH5v reinit-ctx-offset@xz.team"
       ];
       passwordFile = "/etc/primary-user-password";
     };
     users.root.hashedPassword = "*";
   };
 
-  nix.settings.trusted-users = [ "root" "solomon" ];
+  nix.settings.trusted-users = [ "root" "b7r6" ];
   nix.package = pkgs.nixUnstable;
+
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ /etc/ssh/authorized_keys.d/root ];
+  users.users.root.openssh.authorizedKeys.keyFiles =
+    [ /etc/ssh/authorized_keys.d/root ];
 
   networking = {
     hostName = "nixos";
     wireless.enable = true;
     useDHCP = lib.mkDefault true;
+
     # TODO: This should be generated in the install.sh script
     hostId = "997f3c8d";
   };
 
   environment.systemPackages = [ pkgs.vim pkgs.git ];
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "23.11";
 }

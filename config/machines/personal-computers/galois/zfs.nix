@@ -4,11 +4,10 @@
 # Required Target Permission:
 #   compression,create,destroy,hold,mount,mountpoint,receive,refreservation,release,rollback,send,snapshot
 #   https://github.com/jimsalterjrs/sanoid/issues/660
-{ config, ... }:
-
-{
+{ config, ... }: {
   services.zfs = {
     autoScrub.enable = true;
+
     autoSnapshot = {
       enable = true;
       frequent = 4;
@@ -16,23 +15,24 @@
       weekly = 4;
       monthly = 3;
     };
+
     trim.enable = true;
   };
 
-  services.syncoid = {
-    enable = true;
-    sshKey = config.sops.secrets.syncoid-ssh-key.path;
-    commands = {
-      "tank/home" = {
-        target = "syncoid@sandra-voi:tank/system-snapshots/nightshade/home";
-        recursive = true;
-      };
-      "tank/root" = {
-        target = "syncoid@sandra-voi:tank/system-snapshots/nightshade/root";
-        recursive = true;
-      };
-    };
-  };
+  # services.syncoid = {
+  #   enable = true;
+  #   sshKey = config.sops.secrets.syncoid-ssh-key.path;
+  #   commands = {
+  #     "tank/home" = {
+  #       target = "syncoid@sandra-voi:tank/system-snapshots/nightshade/home";
+  #       recursive = true;
+  #     };
+  #     "tank/root" = {
+  #       target = "syncoid@sandra-voi:tank/system-snapshots/nightshade/root";
+  #       recursive = true;
+  #     };
+  #   };
+  # };
 
-  users.users.syncoid.extraGroups = [ "keys" ];
+  # users.users.syncoid.extraGroups = [ "keys" ];
 }

@@ -1,5 +1,1 @@
-{ pkgs, ... }:
-
-{
-  users.mutableUsers = false;
-}
+{ pkgs, ... }: { users.mutableUsers = false; }
