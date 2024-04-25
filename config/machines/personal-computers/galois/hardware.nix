@@ -4,11 +4,13 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.supportedFilesystems = [ "zfs" ];
 
+  boot.initrd.kernelModules = [ ];
   boot.initrd.availableKernelModules =
-    [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+    [ "nvme" "xhci_pci" "thunderbolt" "usbhid" "usb_storage" "sd_mod" ];
 
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
 
   fileSystems."/" = {
     device = "tank/root";
@@ -37,12 +39,14 @@
 
   swapDevices = [{ device = "/dev/disk/by-label/swap"; }];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  # TODO(xz): investigate...
+  # powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
   nix.settings = {
     build-cores = 8;
     max-jobs = lib.mkDefault 32;
   };
 
-  services.xserver.dpi = 130;
+  # TODO(xz): investigate...
+  # services.xserver.dpi = 130;
 }

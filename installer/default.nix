@@ -11,7 +11,7 @@
   };
 
   isoImage = {
-    edition = lib.mkForce "hyper-modern-nixos-minimal";
+    edition = lib.mkForce "hyper-modern";
     isoName = lib.mkForce "NixOS.iso";
   };
 

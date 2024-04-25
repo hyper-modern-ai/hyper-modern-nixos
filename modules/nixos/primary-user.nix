@@ -3,7 +3,7 @@
 let
   P = pkgs;
   L = lib;
-  B = p.builtins;
+  B = P.builtins;
 
   cfg = config.primary-user;
 
