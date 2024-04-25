@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   imports = [
     ../../../modules
 
@@ -21,14 +19,14 @@
     ../../modules/ui/zsh
   ];
 
-  primary-user.name = "solomon";
+  primary-user.name = "b7r6";
 
   nix.package = pkgs.nixUnstable;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
 
-  system.stateVersion = "22.05";
+  system.stateVersion = "23.11";
   nix.settings.trusted-users = [ "@wheel" ];
   environment.shells = [ pkgs.zsh pkgs.bashInteractive ];
 

@@ -1,6 +1,4 @@
-{ config, lib, inputs, ... }:
-
-{
+{ config, lib, inputs, ... }: {
   nix = {
     gc = {
       automatic = true;
@@ -8,10 +6,8 @@
       dates = "03:15";
     };
 
-    nixPath = lib.mkForce [
-      "unstable=${inputs.unstable}"
-      "nixpkgs=${inputs.nixpkgs}"
-    ];
+    nixPath =
+      lib.mkForce [ "unstable=${inputs.unstable}" "nixpkgs=${inputs.nixpkgs}" ];
 
     settings.auto-optimise-store = true;
 

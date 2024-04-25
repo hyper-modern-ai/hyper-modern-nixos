@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 let
-  config-file = device: pkgs.writeText "kmonad.cfg"
-    ''
+  config-file = device:
+    pkgs.writeText "kmonad.cfg" ''
       (defcfg
         input (device-file "${device}")
         output (uinput-sink "internal-keyboard")
@@ -36,12 +36,13 @@ let
                                                                   left down rght
       )
     '';
-in
-{
+in {
   primary-user.extraGroups = [ "uinput" "input" ];
 
   users.groups = { uinput = { }; };
+
   boot.kernelModules = [ "uinput" ];
+
   services.udev.extraRules = ''
     # KMonad user access to /dev/uinput
     KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
@@ -57,7 +58,9 @@ in
     serviceConfig = {
       Restart = "always";
       RestartSec = "3";
-      ExecStart = "${pkgs.kmonad}/bin/kmonad ${config-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd"}";
+      ExecStart = "${pkgs.kmonad}/bin/kmonad ${
+          config-file "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
+        }";
     };
     wantedBy = [ "default.target" ];
   };
@@ -68,7 +71,9 @@ in
     serviceConfig = {
       Restart = "always";
       RestartSec = "3";
-      ExecStart = "${pkgs.kmonad}/bin/kmonad ${config-file "/dev/input/by-id/usb-HID_Keyboard_HID_Keyboard-event-kbd"}";
+      ExecStart = "${pkgs.kmonad}/bin/kmonad ${
+          config-file "/dev/input/by-id/usb-HID_Keyboard_HID_Keyboard-event-kbd"
+        }";
     };
   };
 }

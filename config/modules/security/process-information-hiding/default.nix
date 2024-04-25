@@ -1,5 +1,1 @@
-{ ... }:
-
-{
-  security.hideProcessInformation = true;
-}
+{ ... }: { security.hideProcessInformation = true; }

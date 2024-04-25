@@ -1,9 +1,13 @@
 { pkgs, lib, config, ... }:
 
 let
+  P = pkgs;
+  L = lib;
+  B = P.builtins;
+
   home = config.primary-user.home-manager.home.homeDirectory;
-in
-{
+
+in {
   primary-user.home-manager.programs.zsh = {
     dotDir = ".config/zsh";
     enable = true;
@@ -21,18 +25,16 @@ in
 
     historySubstringSearch.enable = true;
 
-    plugins = [
-      {
-        name = "zsh-nix-shell";
-        file = "nix-shell.plugin.zsh";
-        src = pkgs.fetchFromGitHub {
-          owner = "chisui";
-          repo = "zsh-nix-shell";
-          rev = "v0.1.0";
-          sha256 = "0snhch9hfy83d4amkyxx33izvkhbwmindy0zjjk28hih1a9l2jmx";
-        };
-      }
-    ];
+    plugins = [{
+      name = "zsh-nix-shell";
+      file = "nix-shell.plugin.zsh";
+      src = pkgs.fetchFromGitHub {
+        owner = "chisui";
+        repo = "zsh-nix-shell";
+        rev = "v0.1.0";
+        sha256 = "0snhch9hfy83d4amkyxx33izvkhbwmindy0zjjk28hih1a9l2jmx";
+      };
+    }];
 
     initExtra = ''
       bindkey '^l' autosuggest-accept
@@ -65,10 +67,10 @@ in
           BRANCH=$(git branch | fzf| tr -d '[:space:]')
           [[ -n $BRANCH ]] && git checkout $BRANCH
       }
-      
+
       function git-checkout-branch {
           $(git rev-parse --is-inside-work-tree >& /dev/null)
-      
+
           if [ "$?" -eq "0" ]; then
               [[ -n $1 ]] && git checkout $1 || fzf-checkout
           fi

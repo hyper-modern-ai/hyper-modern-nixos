@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{ pkgs, ... }: {
   primary-user.extraGroups = [ "audio" ];
 
   security.rtkit.enable = true;
@@ -13,7 +11,5 @@
 
   };
 
-  environment.systemPackages = [
-    pkgs.pulseaudio
-  ];
+  environment.systemPackages = [ pkgs.pulseaudio ];
 }

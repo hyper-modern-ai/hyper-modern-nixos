@@ -1,10 +1,8 @@
 { config, pkgs, lib, ... }:
 
 with lib;
-let
-  cfg = config.programs.termonad;
-in
-{
+let cfg = config.programs.termonad;
+in {
   options.programs.termonad = {
     enable = mkOption {
       type = types.bool;

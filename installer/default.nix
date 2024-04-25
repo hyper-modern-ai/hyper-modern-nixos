@@ -1,10 +1,6 @@
-# https://github.com/Gerg-L/nixos/blob/master/installer/default.nix
-{ config, pkgs, lib, system ? builtins.currentSystem, modulesPath, ... }:
-
-{
-  imports = [
-    "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
-  ];
+# n.b: `https://github.com/Gerg-L/nixos/blob/master/installer/default.nix`...
+{ config, pkgs, lib, system ? builtins.currentSystem, modulesPath, ... }: {
+  imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
 
   systemd.services.sshd.wantedBy = pkgs.lib.mkForce [ "multi-user.target" ];
 
@@ -15,7 +11,7 @@
   };
 
   isoImage = {
-    edition = lib.mkForce "solomon-min";
+    edition = lib.mkForce "hyper-modern-nixos-minimal";
     isoName = lib.mkForce "NixOS.iso";
   };
 
